@@ -21,22 +21,6 @@ public class RoundRecyclerAdapter extends RecyclerView.Adapter<RoundRecyclerAdap
     public Program program;
     public RecyclerItemRoundBinding binding;
 
-    private  String[] titles = {
-            "Chapter One", "Chapter Two", "Chapter Three", "Chapter Four",
-            "Chapter Five", "Chapter Six", "Chapter Seven", "Chapter Eight"
-    };
-
-    private String[] details = {
-            "Lorem ipsum one",
-            "Lorem ipsum two",
-            "Lorem ipsum three",
-            "Lorem ipsum four",
-            "Lorem ipsum five",
-            "Lorem ipsum six",
-            "Lorem ipsum seven",
-            "Lorem ipsum eight"
-    };
-
 
     public RoundRecyclerAdapter(int _id){
         runId = _id;
@@ -53,13 +37,6 @@ public class RoundRecyclerAdapter extends RecyclerView.Adapter<RoundRecyclerAdap
         View view = binding.getRoot();
         return new ViewHolder(view);
 
-//        binding = RecyclerItemRoundBinding.inflate(getLayoutInflater());
-//        View view = binding.getRoot();
-//        setContentView(v);
-
-//        View v = LayoutInflat/*er.from(viewGroup.getContext()).inflate(R.layout.recycler_item_round, viewGroup, false);
-//        ViewHolder viewHolder = new ViewHolder(v);
-//        return viewHolder;*/
     }
 
 
@@ -83,7 +60,6 @@ public class RoundRecyclerAdapter extends RecyclerView.Adapter<RoundRecyclerAdap
     @Override
     public int getItemCount() {
                 return program.course.length;
-//        return titles.length;
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -100,27 +76,4 @@ public class RoundRecyclerAdapter extends RecyclerView.Adapter<RoundRecyclerAdap
             });
         }
     }
-//    public class ViewHolder extends RecyclerView.ViewHolder{
-//
-//        ImageView itemImage;
-//        TextView itemTitle;
-//        TextView itemDetail;
-//
-//        public ViewHolder(@NonNull View itemView){
-//            super(itemView);
-////            itemImage = itemView.findViewById(R.id.item_image);
-////            itemTitle = itemView.findViewById(R.id.item_title);
-////            itemDetail = itemView.findViewById(R.id.item_detail);
-//
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int position = getAdapterPosition();
-//                    Snackbar.make(v, "Click detected on item " + position,
-//                                    Snackbar.LENGTH_LONG)
-//                            .setAction("Action", null).show();
-//                }
-//            });
-//        }
-//    }
 }
