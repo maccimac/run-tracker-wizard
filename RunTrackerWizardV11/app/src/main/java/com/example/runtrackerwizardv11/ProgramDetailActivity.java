@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -29,7 +30,22 @@ public class ProgramDetailActivity extends AppCompatActivity {
         recyclerView = binding.recyclerRounds;
         layoutManager  = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new RoundRecyclerAdapter(2);
+        adapter = new RoundRecyclerAdapter( 2);
         recyclerView.setAdapter(adapter);
+
+        binding.btnStartRun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToRun();
+            }
+        });
+
+
+    }
+
+
+    public void goToRun(){
+        Intent i = new Intent(this, RunActivity.class);
+        startActivity(i);
     }
 }

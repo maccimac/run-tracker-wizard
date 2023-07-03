@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
+    android:layout_marginBottom="4dp"
     android:gravity="bottom"
     android:orientation="vertical"
     tools:context=".NavigationFragment">
@@ -16,7 +16,7 @@
         android:baselineAligned="false"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:padding="8dp">
 
         <TextView
             android:layout_width="wrap_content"

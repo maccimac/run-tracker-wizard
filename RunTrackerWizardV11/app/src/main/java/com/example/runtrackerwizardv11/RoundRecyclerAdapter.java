@@ -1,18 +1,25 @@
 package com.example.runtrackerwizardv11;
 
+import static androidx.databinding.DataBindingUtil.setContentView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.runtrackerwizardv11.databinding.RecyclerItemRoundBinding;
+
 import com.google.android.material.snackbar.Snackbar;
+
 
 public class RoundRecyclerAdapter extends RecyclerView.Adapter<RoundRecyclerAdapter.ViewHolder> {
 
     private int runId;
     public Program program;
+    public RecyclerItemRoundBinding binding;
 
     private  String[] titles = {
             "Chapter One", "Chapter Two", "Chapter Three", "Chapter Four",
@@ -40,17 +47,37 @@ public class RoundRecyclerAdapter extends RecyclerView.Adapter<RoundRecyclerAdap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_item_round, viewGroup, false);
-        ViewHolder viewHolder = new ViewHolder(v);
-        return viewHolder;
+
+        LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
+        binding = DataBindingUtil.inflate(inflater, R.layout.recycler_item_round, viewGroup, false);
+        View view = binding.getRoot();
+        return new ViewHolder(view);
+
+//        binding = RecyclerItemRoundBinding.inflate(getLayoutInflater());
+//        View view = binding.getRoot();
+//        setContentView(v);
+
+//        View v = LayoutInflat/*er.from(viewGroup.getContext()).inflate(R.layout.recycler_item_round, viewGroup, false);
+//        ViewHolder viewHolder = new ViewHolder(v);
+//        return viewHolder;*/
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-//        // populates
-//        viewHolder.itemTitle.setText(titles[i]);
-//        viewHolder.itemDetail.setText(details[i]);
-//        viewHolder.itemImage.setImageResource(images[i]);
+        Program.Round r = program.course[i];
+
+        String textRound = "Round " + (i+1) + "/" + (program.course.length + 1);
+        String textRun = r.runMeter + " meter Run";
+        String textRest = (r.restSec/60) + " min Rest";
+
+        binding.textRound.setText(textRound);
+        binding.textRun.setText(textRun);
+        binding.textRest.setText(textRest);
+        if(r.restSec < 1){
+            binding.textRest.setVisibility(View.GONE);
+        }
+
     }
 
     @Override

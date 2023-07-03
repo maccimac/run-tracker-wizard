@@ -18,12 +18,13 @@
         tools:layout="@layout/fragment_navigation" />
 
     <ScrollView
+        android:id="@+id/holderRecycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:padding="12dp"
         android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/holderStart"
+        app:layout_constraintEnd_toEndOf="@id/holderStart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView"
         app:layout_constraintVertical_weight="1"
@@ -52,20 +53,36 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_rounds"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/holderStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:orientation="vertical"
+        android:padding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/holderRecycler"
+        tools:layout_constraintTop_toBottomOf="@id/holderRecycler">
+
+        <Button
+            android:id="@+id/btnStartRun"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="90dp"
+            android:text="Start Run" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
