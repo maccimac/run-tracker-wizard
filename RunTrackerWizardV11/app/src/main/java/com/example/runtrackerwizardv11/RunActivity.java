@@ -12,10 +12,12 @@ import com.example.runtrackerwizardv11.databinding.ActivityRunBinding;
 public class RunActivity extends AppCompatActivity {
     static ActivityRunBinding binding;
     Program program;
-    static TextView myTextView;
-    int currRound;
+    static TextView textTimerMain;
+    static TextView labelMain;
+    Countdown currCountDown;
     int currentRunMeter;
     int currentRestSecond;
+    boolean stop = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,76 +25,98 @@ public class RunActivity extends AppCompatActivity {
         binding = ActivityRunBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-        myTextView = binding.textCount;
-//        setContentView(R.layout.activity_run);
+
+
+        textTimerMain = binding.textCount;
+        labelMain = binding.textRunOrRest;
         program = new Program(2);
-
-        timerStart();
-
-//        myTextView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
-
+        startRound(program.course[0]);
     }
 
-    public static class CB{
-        public CB(){
+    public static class TimerHelperCallback{
+        public TimerHelperCallback(){
 
         }
         public static void testCb(){
-            binding.btnPause.setText("DONE");
+            binding.btnEnd.setText("DONE");
+        }
+
+        public static void declareRest(){
+            binding.textRunOrRest.setText("Rest");
+        }
+
+        public static void declareRun(){
+            binding.textRunOrRest.setText("Run");
+        }
+
+
+    }
+
+    public void startRound(Program.Round r){
+        TimerHelperCallback xyz = new TimerHelperCallback();
+        for (int currRound = 0; currRound < program.course.length; currRound++) {
+            new Countdown(r.runMeter/10, "Run", currRound, xyz).execute();
+            new Countdown(r.restSec, "Rest", currRound, xyz).execute();
         }
     }
 
 
-
-
     public void timerStart(){
-        CB xyz = new CB();
-        AsyncTask fiveSec = new Countdown(10).execute();
 
+        AsyncTask fiveSec = new Countdown(10).execute();
     }
+
 
     public class Countdown extends AsyncTask<String, Integer, String> implements com.example.runtrackerwizardv11.Countdown {
 
         int seconds = 0;
-        CB callback;
+        int currRound = 0;
+        String label;
+        TimerHelperCallback callback;
 
         public Countdown(int _seconds) {
             seconds = _seconds;
         }
 //
-//        public Countdown(int _seconds, CB _callback) {
-//            seconds = _seconds;
-//            callback = _callback;
-//        }
+        public Countdown(int _seconds, String _label , int _currRound, TimerHelperCallback _callback) {
+            currRound = _currRound;
+            seconds = _seconds;
+            callback = _callback;
+            label = _label;
+        }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();super.onPreExecute();
+            if(label != null){
+                labelMain.setText(label);
+            }
         }
 
         @Override
         protected void onPostExecute(String result) {
 //            super.onPostExecute(s);
-            myTextView.setText(result);
+            if(callback != null){
+                TimerHelperCallback.testCb();
+            }
+//            myTextView.setText(result);
         }
 
         @Override
         public void onProgressUpdate(int i) {
 //            super.onProgressUpdate(values);
-            myTextView.setText("" + i);
+            textTimerMain.setText("" + i);
         }
 
         @Override
         protected String doInBackground(String... strings) {
-//            return null;
+//            currCountDown = this;
+            binding.textRoundNo.setText( "Round " + (currRound+1) +" of " + (program.course.length + 1));
+            if(label != null){
+                labelMain.setText(label);
+            }
             int i = 0;
             while( i <= seconds){
-
                 onProgressUpdate(seconds-i);
 //                publishProgress(i);
                 try{
@@ -102,10 +126,6 @@ public class RunActivity extends AppCompatActivity {
 
                 }
             }
-
-//            if(callback != null){
-//                CB.testCb();
-//            }
 
             return "Done";
         }
