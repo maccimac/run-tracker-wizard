@@ -2,6 +2,7 @@ package com.example.runtrackerwizardv11;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -31,6 +32,11 @@ public class RunActivity extends AppCompatActivity {
         labelMain = binding.textRunOrRest;
         program = new Program(2);
         startRound(program.course[0]);
+    }
+
+    public void goToDistanceTracker(View view) {
+        startActivity( new Intent(this.getApplicationContext(), DistanceTrackingActivity.class)
+                );
     }
 
     public static class TimerHelperCallback{
@@ -117,7 +123,7 @@ public class RunActivity extends AppCompatActivity {
             }
             int i = 0;
             while( i <= seconds){
-                onProgressUpdate(seconds-i);
+                onProgressUpdate(seconds -i);
 //                publishProgress(i);
                 try{
                     Thread.sleep(1000);

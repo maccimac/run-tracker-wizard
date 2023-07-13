@@ -48,4 +48,9 @@ public class ProgramDetailActivity extends AppCompatActivity {
         Intent i = new Intent(this, RunActivity.class);
         startActivity(i);
     }
+
+    public void goToDistanceTracker(View view) {
+        startActivity( new Intent(this.getApplicationContext(), DistanceTrackingActivity.class)
+        );
+    }
 }

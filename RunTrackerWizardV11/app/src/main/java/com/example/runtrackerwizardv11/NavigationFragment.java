@@ -1,5 +1,6 @@
 package com.example.runtrackerwizardv11;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -61,4 +62,5 @@ public class NavigationFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_navigation, container, false);
     }
+
 }
