@@ -19,6 +19,9 @@ public class RunActivity extends AppCompatActivity {
     int currentRunMeter;
     int currentRestSecond;
     boolean stop = false;
+    boolean isPaused = false;
+    boolean forceNext = false;
+    boolean forceEnd = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +30,38 @@ public class RunActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-
         textTimerMain = binding.textCount;
         labelMain = binding.textRunOrRest;
         program = new Program(2);
         startRound(program.course[0]);
+
+        binding.btnPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isPaused = !isPaused;
+                if(isPaused){
+                    binding.btnPause.setText("Resume");
+                }else{
+                    binding.btnPause.setText("Pause");
+                }
+
+            }
+        });
+
+        binding.btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                forceNext = true;
+            }
+        });
+
+        binding.btnEnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                forceEnd = true;
+                startActivity( new Intent(RunActivity.this,  DoneActivity.class));
+            }
+        });
     }
 
     public void goToDistanceTracker(View view) {
@@ -61,14 +91,16 @@ public class RunActivity extends AppCompatActivity {
     public void startRound(Program.Round r){
         TimerHelperCallback xyz = new TimerHelperCallback();
         for (int currRound = 0; currRound < program.course.length; currRound++) {
-            new Countdown(r.runMeter/10, "Run", currRound, xyz).execute();
-            new Countdown(r.restSec, "Rest", currRound, xyz).execute();
+            if(!forceEnd){
+                new Countdown(r.runMeter/10, "Run", currRound, xyz).execute();
+                new Countdown(r.restSec, "Rest", currRound, xyz).execute();
+            }
+
         }
     }
 
 
     public void timerStart(){
-
         AsyncTask fiveSec = new Countdown(10).execute();
     }
 
@@ -104,6 +136,15 @@ public class RunActivity extends AppCompatActivity {
 //            super.onPostExecute(s);
             if(callback != null){
                 TimerHelperCallback.testCb();
+
+//                if (currRound < program.course.length - 1) {
+//                    currRound++;
+//                    Program.Round nextRound = program.course[currRound];
+//                    new Countdown(nextRound.runMeter / 10, "Run", currRound, callback).execute();
+//                } else {
+//                    // All rounds are completed, do something if needed.
+//
+//                }
             }
 //            myTextView.setText(result);
         }
@@ -114,6 +155,11 @@ public class RunActivity extends AppCompatActivity {
             textTimerMain.setText("" + i);
         }
 
+        public void end() {
+            this.cancel(true);
+        }
+
+
         @Override
         protected String doInBackground(String... strings) {
 //            currCountDown = this;
@@ -122,13 +168,22 @@ public class RunActivity extends AppCompatActivity {
                 labelMain.setText(label);
             }
             int i = 0;
-            while( i <= seconds){
-                onProgressUpdate(seconds -i);
-//                publishProgress(i);
-                try{
-                    Thread.sleep(1000);
-                    i++;
-                }catch(Exception e){
+
+            while( i <= seconds && !forceEnd){
+                if(forceNext){
+                    i=seconds-1;
+                    forceNext = false;
+                }
+                if(!isPaused){
+                    onProgressUpdate(seconds -i);
+                    publishProgress(i);
+                    try{
+                        Thread.sleep(1000);
+                        i++;
+                    }catch(Exception e){
+
+                    }
+                }else{
 
                 }
             }
