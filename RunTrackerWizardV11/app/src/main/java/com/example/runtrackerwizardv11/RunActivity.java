@@ -64,10 +64,10 @@ public class RunActivity extends AppCompatActivity {
         });
     }
 
-    public void goToDistanceTracker(View view) {
-        startActivity( new Intent(this.getApplicationContext(), DistanceTrackingActivity.class)
-                );
-    }
+//    public void goToDistanceTracker(View view) {
+//        startActivity( new Intent(this.getApplicationContext(), DistanceTrackingActivity.class)
+//                );
+//    }
 
     public static class TimerHelperCallback{
         public TimerHelperCallback(){
