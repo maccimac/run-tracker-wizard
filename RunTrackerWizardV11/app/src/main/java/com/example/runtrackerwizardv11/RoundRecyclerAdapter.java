@@ -22,16 +22,13 @@ public class RoundRecyclerAdapter extends RecyclerView.Adapter<RoundRecyclerAdap
     public RecyclerItemRoundBinding binding;
 
 
-    public RoundRecyclerAdapter(int _id){
-        runId = _id;
-        program = new Program(_id);
-
+    public RoundRecyclerAdapter(Program _program){
+        program = _program;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
         binding = DataBindingUtil.inflate(inflater, R.layout.recycler_item_round, viewGroup, false);
         View view = binding.getRoot();

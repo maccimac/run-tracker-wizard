@@ -17,20 +17,37 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
 
 
-        binding.cardRun2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToProgramDetail(2);
-            }
-        });
+//        binding.cardRun2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                goToProgramDetail(2);
+//            }
+//        });
     }
 
-    public void goToProgramDetail(int _id) {
+    public void prog1(View view){
+     goToProgramDetail(1);
+    }
+    public void prog2(View view){
+        goToProgramDetail(2);
+    }
+    public void prog3(View view){
+        goToProgramDetail(3);
+    }
+    public void prog4(View view){
+        goToProgramDetail(4);
+    }
 
+
+    public void goToProgramDetail(int _id) {
         Intent i = new Intent(this, ProgramDetailActivity.class);
         i.putExtra("programId", _id);
         startActivity(i);
     }
+
+//    public void prog1(View view) {
+//    }
 
 //    public void goToDistanceTracker(View view) {
 //        startActivity( new Intent(this.getApplicationContext(), DistanceTrackingActivity.class)

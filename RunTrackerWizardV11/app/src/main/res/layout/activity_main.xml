@@ -13,7 +13,6 @@
         android:name="com.example.runtrackerwizardv11.NavigationFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="goToDistanceTracker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -54,17 +53,19 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardProgram1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="64dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:backgroundTint="#673AB7"
+                android:onClick="prog1"
+                android:padding="16dp"
                 app:cardCornerRadius="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:padding="20dp">
 
                     <TextView
                         android:id="@+id/labelRunA"
@@ -86,18 +87,20 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardRun2"
+                android:onClick="prog1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="64dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:backgroundTint="#673AB7"
+                android:padding="16dp"
                 app:cardCornerRadius="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:padding="20dp">
 
                     <TextView
                         android:id="@+id/labelLevel2"
@@ -111,18 +114,20 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:onClick="prog3"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="64dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:backgroundTint="#673AB7"
+                android:padding="16dp"
                 app:cardCornerRadius="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:padding="20dp">
 
                     <TextView
                         android:id="@+id/labelConsitentRun"
@@ -143,18 +148,20 @@
                 android:text="ADVANCED" />
 
             <androidx.cardview.widget.CardView
+                android:onClick="prog4"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="64dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:backgroundTint="#673AB7"
+                android:padding="16dp"
                 app:cardCornerRadius="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:padding="8dp">
+                    android:padding="20dp">
 
                     <TextView
                         android:id="@+id/labelTaperRun"

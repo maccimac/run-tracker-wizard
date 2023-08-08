@@ -92,7 +92,8 @@ public class LocationHelper {
                         float distance = previousLocation.distanceTo(location);
                         totalDistance += distance;
                         if(targetKm > 0 ){
-                            String msg = (totalDistance/100) + "KM / " + (targetKm/100) + "KM";
+                            String strKm = String.format("%.2f", (targetKm/100));
+                            String msg = (totalDistance/100) + "KM / " + strKm  + "KM";
                             Log.d("XYZ", "Distance traveled: " + totalDistance + " meters");
                             txtTravelled.setText(msg);
                         }else{

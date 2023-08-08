@@ -23,6 +23,7 @@ public class RunActivity extends AppCompatActivity {
     boolean forceNext = false;
     boolean forceEnd = false;
     LocationHelper lh;
+    int progId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +32,23 @@ public class RunActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+
+        Bundle extras = getIntent().getExtras();
+
+        progId = extras.getInt("programId");
+
         textTimerMain = binding.textCount;
         textDistMain = binding.textDistance;
         labelMain = binding.textRunOrRest;
         locationMain = binding.textAddress;
-        program = new Program(2);
+        program = new Program(progId);
 //        startRound(program.course[0]);
 
+        binding.textView3.setText(program.name);
+        binding.textView.setText(program.level);
+
         TimerHelperCallback timerCb = new TimerHelperCallback();
+
 
         lh = new LocationHelper( RunActivity.this, locationMain, textDistMain, 0.0);
         for (int currRound = 0; currRound < program.course.length; currRound++) {

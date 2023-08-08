@@ -16,6 +16,7 @@ public class ProgramDetailActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RoundRecyclerAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
+    int progId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +24,22 @@ public class ProgramDetailActivity extends AppCompatActivity {
         binding = ActivityProgramDetailBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+
+        Bundle extras = getIntent().getExtras();
+
+        progId = extras.getInt("programId");
+
         recyclerView = binding.recyclerRounds;
         layoutManager  = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new RoundRecyclerAdapter( 2);
+        Program prog = new Program(progId);
+        adapter = new RoundRecyclerAdapter(prog);
         recyclerView.setAdapter(adapter);
+
+
+        binding.textView3.setText(prog.name);
+        binding.textView.setText(prog.level);
 
 //        LocationHelper lh = new LocationHelper(this, findViewById(R.id.txtLocation), findViewById(R.id.txtDistance));
 
@@ -44,6 +56,7 @@ public class ProgramDetailActivity extends AppCompatActivity {
 
     public void goToRun(){
         Intent i = new Intent(this, RunActivity.class);
+        i.putExtra("programId", progId);
         startActivity(i);
     }
 
