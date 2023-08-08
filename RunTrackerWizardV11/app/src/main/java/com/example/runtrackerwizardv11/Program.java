@@ -32,35 +32,36 @@ public class Program {
                 name = "Pyramid Run";
                 level = 2;
                 course = new Round[]{
-                        new Round(200, 1),
-                        new Round(400, 2),
-                        new Round(800, 2),
-                        new Round(400, 1),
-                        new Round(200, 0),
+                        new Round(200, 1.5,  0.5),
+                        new Round(400, 2, 1),
+                        new Round(800, 3, 1),
+                        new Round(400, 2, 0.5),
+                        new Round(200, 1.5, 0),
                 };
-
-
-
                 break;
 
         }
 
     }
 
+
     class Round{
-        public int runMeter;
-        public int restSec;
+        public double runMeter;
+        public int  restSec;
+        public int runSec;
 
-        public Round(int _run, int _restMin) {
+        public Round(double _run, double _runMin,  double _restMin ) {
             runMeter = _run;
-            restSec = _restMin * 60;
-        }
-
+            restSec = (int) (_restMin * 60);
+            runSec = (int) (_runMin * 60);
     }
 
     public void getTotalKm(){
 
     }
+
+
+
 
     // 2: Pyramid run
 
@@ -68,9 +69,4 @@ public class Program {
 
 
 
-
-
-
-
-
-}
+}}

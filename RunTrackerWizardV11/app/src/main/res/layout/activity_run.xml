@@ -54,19 +54,34 @@
                 android:id="@+id/textRunOrRest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="Run"
                 android:textAlignment="center"
-                android:textSize="48sp" />
+                android:textSize="32sp" />
 
             <TextView
                 android:id="@+id/textCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="6dp"
                 android:text="00"
                 android:textAlignment="center"
-                android:textSize="96sp" />
+                android:textSize="56sp" />
+
+            <TextView
+                android:id="@+id/textDistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:textAlignment="center"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/textAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center" />
 
         </LinearLayout>
 
@@ -86,7 +101,7 @@
                 android:id="@+id/btnPause"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:text="Pause" />
+                android:text="Pause Timer" />
 
             <LinearLayout
                 android:layout_width="match_parent"

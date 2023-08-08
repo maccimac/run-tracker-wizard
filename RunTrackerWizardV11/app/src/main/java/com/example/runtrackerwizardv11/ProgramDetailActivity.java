@@ -29,7 +29,7 @@ public class ProgramDetailActivity extends AppCompatActivity {
         adapter = new RoundRecyclerAdapter( 2);
         recyclerView.setAdapter(adapter);
 
-        LocationHelper lh = new LocationHelper(this, findViewById(R.id.txtLocation), findViewById(R.id.txtDistance));
+//        LocationHelper lh = new LocationHelper(this, findViewById(R.id.txtLocation), findViewById(R.id.txtDistance));
 
         binding.btnStartRun.setOnClickListener(new View.OnClickListener() {
             @Override

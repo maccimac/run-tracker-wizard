@@ -46,7 +46,7 @@ public class RoundRecyclerAdapter extends RecyclerView.Adapter<RoundRecyclerAdap
 
         String textRound = "Round " + (i+1) + "/" + (program.course.length + 1);
         String textRun = r.runMeter + " meter Run";
-        String textRest = (r.restSec/60) + " min Rest";
+        String textRest = r.restSec + " secs Rest";
 
         binding.textRound.setText(textRound);
         binding.textRun.setText(textRun);

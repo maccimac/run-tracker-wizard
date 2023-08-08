@@ -37,6 +37,7 @@ public class LocationHelper {
     TextView stat, stat2;
 
     public TextView txtTravelled, txtLocationName, txtLat, txtLong;
+    Double targetKm;
     Activity context;
 
 
@@ -51,52 +52,64 @@ public class LocationHelper {
 
     }
 
-    public LocationHelper(Activity context, TextView txtLocationName, TextView txtTravelled) {
+    public LocationHelper(Activity context, TextView txtLocationName, TextView txtTravelled, Double targetKm) {
         this.context = context;
         this.txtLocationName = txtLocationName;
         this.txtTravelled = txtTravelled;
+        this.targetKm = targetKm;
         routePoints = new ArrayList<>();
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
 
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest.setInterval(5000); // Update interval in milliseconds
+        locationRequest.setInterval(1000); // Update interval in milliseconds
 
-        Log.d("TAG", "New helper.");
+        Log.d("XYZ", "New helper.");
         setLocationCallback();
         startLocationUpdates();
     }
 
-    public void setLocationCallback() {
+    public void restart(Double targetKm){
+        this.targetKm = targetKm;
+        this.totalDistance = 0;
 
+    }
+
+    public void setLocationCallback() {
         this.locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
                 if (locationResult == null) {
-                    Log.d("TAG", "Location null");
+                    Log.d("XYZ", "Location null");
                     return;
                 }
 
-                Log.d("TAG", "Looking for locations");
+                Log.d("XYZ", "Looking for locations");
+
                 for (Location location : locationResult.getLocations()) {
                     if (previousLocation != null) {
                         // Calculate distance between previous location and current location
                         float distance = previousLocation.distanceTo(location);
                         totalDistance += distance;
-                        String msg = "Distance traveled: " + totalDistance + " meters";
-                        Log.d("Distance", "Distance traveled: " + totalDistance + " meters");
-                        txtTravelled.setText(msg);
+                        if(targetKm > 0 ){
+                            String msg = (totalDistance/100) + "KM / " + (targetKm/100) + "KM";
+                            Log.d("XYZ", "Distance traveled: " + totalDistance + " meters");
+                            txtTravelled.setText(msg);
+                        }else{
+                            txtTravelled.setText("");
+                        }
+
 
                         // Check for significant route change
                         if (isRouteChanged(location)) {
-                            Log.d("Route", "Route changed");
+                            Log.d("XYZ", "Route changed");
 //                            stat.setText("Route changed");
                         }
                     }
                     previousLocation = location;
                     routePoints.add(location);
                     String msg2 = "Latitude: " + location.getLatitude() + ", Longitude: " + location.getLongitude();
-                    Log.d("Location", msg2);
+                    Log.d("XYZ", msg2);
 
                     getPlaceNameFromCoordinates(location.getLatitude() , location.getLongitude() );
                 }
@@ -136,13 +149,13 @@ public class LocationHelper {
             if (addresses != null && !addresses.isEmpty()) {
                 Address address = addresses.get(0);
                 String locationName = address.getAddressLine(0); // Get the full address as a string
-                Log.d("TAG", "Location Name: " + locationName);
+                Log.d("XYZ", "Location Name: " + locationName);
                 txtLocationName.setText(locationName);
             } else {
-                Log.d("TAG", "No address found for the coordinates.");
+                Log.d("XYZ", "No address found for the coordinates.");
             }
         } catch (IOException e) {
-            Log.e("TAG", "Error: " + e.getMessage());
+            Log.e("XYZ", "Error: " + e.getMessage());
         }
     }
 
@@ -161,7 +174,7 @@ public class LocationHelper {
 
     private void startLocationUpdates() {
         // Check if the ACCESS_FINE_LOCATION permission is granted
-        Log.d("Route", "Start locacation updates");
+        Log.d("XYZ", "Start locacation updates");
         if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             // Request location updates
@@ -174,7 +187,7 @@ public class LocationHelper {
         }
     }
 
-    private void stopLocationUpdates() {
+    public void stopLocationUpdates() {
         fusedLocationClient.removeLocationUpdates(locationCallback);
     }
 
@@ -185,7 +198,7 @@ public class LocationHelper {
             startLocationUpdates();
         } else {
             // Permission denied, show appropriate message or perform alternative actions
-            Log.d("Permission", "Location permission denied");
+            Log.d("XYZ", "Location permission denied");
         }
     }
 
@@ -234,4 +247,5 @@ public class LocationHelper {
         // Consider a route change if the bearing difference exceeds a threshold (e.g., 45 degrees)
         return bearingDifference > 45.0f;
     }
+
 }

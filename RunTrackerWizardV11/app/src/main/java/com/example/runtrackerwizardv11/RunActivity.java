@@ -13,8 +13,8 @@ import com.example.runtrackerwizardv11.databinding.ActivityRunBinding;
 public class RunActivity extends AppCompatActivity {
     static ActivityRunBinding binding;
     Program program;
-    static TextView textTimerMain;
-    static TextView labelMain;
+    static TextView textTimerMain, textDistMain;
+    static TextView locationMain, labelMain;
     Countdown currCountDown;
     int currentRunMeter;
     int currentRestSecond;
@@ -22,6 +22,7 @@ public class RunActivity extends AppCompatActivity {
     boolean isPaused = false;
     boolean forceNext = false;
     boolean forceEnd = false;
+    LocationHelper lh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,18 +32,32 @@ public class RunActivity extends AppCompatActivity {
         setContentView(view);
 
         textTimerMain = binding.textCount;
+        textDistMain = binding.textDistance;
         labelMain = binding.textRunOrRest;
+        locationMain = binding.textAddress;
         program = new Program(2);
-        startRound(program.course[0]);
+//        startRound(program.course[0]);
+
+        TimerHelperCallback timerCb = new TimerHelperCallback();
+
+        lh = new LocationHelper( RunActivity.this, locationMain, textDistMain, 0.0);
+        for (int currRound = 0; currRound < program.course.length; currRound++) {
+            if(!forceEnd){
+                Program.Round r = program.course[currRound];
+                new Countdown(r.runSec, "Run", currRound, timerCb, r.runMeter).execute();
+                new Countdown(r.restSec, "Rest", currRound, timerCb, 0).execute();
+            }
+
+        }
 
         binding.btnPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 isPaused = !isPaused;
                 if(isPaused){
-                    binding.btnPause.setText("Resume");
+                    binding.btnPause.setText("Resume Timer");
                 }else{
-                    binding.btnPause.setText("Pause");
+                    binding.btnPause.setText("Pause Timer");
                 }
 
             }
@@ -88,16 +103,17 @@ public class RunActivity extends AppCompatActivity {
 
     }
 
-    public void startRound(Program.Round r){
-        TimerHelperCallback xyz = new TimerHelperCallback();
-        for (int currRound = 0; currRound < program.course.length; currRound++) {
-            if(!forceEnd){
-                new Countdown(r.runMeter/10, "Run", currRound, xyz).execute();
-                new Countdown(r.restSec, "Rest", currRound, xyz).execute();
-            }
-
-        }
-    }
+//    public void startRound(Program.Round r){
+//        TimerHelperCallback timerCb = new TimerHelperCallback();
+//        lh = new LocationHelper( RunActivity.this, locationMain, textDistMain, 0.0);
+//        for (int currRound = 0; currRound < program.course.length; currRound++) {
+//            if(!forceEnd){
+//                new Countdown(r.runSec, "Run", currRound, timerCb, r.runMeter).execute();
+//                new Countdown(r.restSec, "Rest", currRound, timerCb, 0).execute();
+//            }
+//
+//        }
+//    }
 
 
     public void timerStart(){
@@ -109,6 +125,7 @@ public class RunActivity extends AppCompatActivity {
 
         int seconds = 0;
         int currRound = 0;
+        double runMeter = 0;
         String label;
         TimerHelperCallback callback;
 
@@ -116,19 +133,17 @@ public class RunActivity extends AppCompatActivity {
             seconds = _seconds;
         }
 //
-        public Countdown(int _seconds, String _label , int _currRound, TimerHelperCallback _callback) {
+        public Countdown(int _seconds, String _label , int _currRound, TimerHelperCallback _callback,  double _runMeter) {
             currRound = _currRound;
             seconds = _seconds;
             callback = _callback;
             label = _label;
+            runMeter = _runMeter;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();super.onPreExecute();
-            if(label != null){
-                labelMain.setText(label);
-            }
         }
 
         @Override
@@ -164,19 +179,29 @@ public class RunActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
 //            currCountDown = this;
             binding.textRoundNo.setText( "Round " + (currRound+1) +" of " + (program.course.length + 1));
+            boolean kmMet = false;
+
             if(label != null){
                 labelMain.setText(label);
+                if(label=="Rest"){
+                    textDistMain.setText("");
+                }else{
+                    lh.restart(runMeter);
+                }
             }
+
             int i = 0;
 
             while( i <= seconds && !forceEnd){
                 if(forceNext){
-                    i=seconds-1;
+                    i=seconds;
                     forceNext = false;
                 }
+//                if(label=="Rest"){
+//                    textDistMain.setText("");
+//                }
                 if(!isPaused){
                     onProgressUpdate(seconds -i);
-                    publishProgress(i);
                     try{
                         Thread.sleep(1000);
                         i++;
