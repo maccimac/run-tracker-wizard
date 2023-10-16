@@ -25,7 +25,6 @@ public class ProgramDetailActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-
         Bundle extras = getIntent().getExtras();
 
         progId = extras.getInt("programId");
@@ -37,31 +36,19 @@ public class ProgramDetailActivity extends AppCompatActivity {
         adapter = new RoundRecyclerAdapter(prog);
         recyclerView.setAdapter(adapter);
 
-
         binding.textView3.setText(prog.name);
         binding.textView.setText(prog.level);
-
-//        LocationHelper lh = new LocationHelper(this, findViewById(R.id.txtLocation), findViewById(R.id.txtDistance));
-
         binding.btnStartRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goToRun();
             }
         });
-
-
     }
-
 
     public void goToRun(){
         Intent i = new Intent(this, RunActivity.class);
         i.putExtra("programId", progId);
         startActivity(i);
     }
-
-//    public void goToDistanceTracker(View view) {
-//        startActivity( new Intent(this.getApplicationContext(), DistanceTrackingActivity.class)
-//        );
-//    }
 }

@@ -15,15 +15,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
-
-//        binding.cardRun2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                goToProgramDetail(2);
-//            }
-//        });
     }
 
     public void prog1(View view){
@@ -46,11 +37,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-//    public void prog1(View view) {
-//    }
-
-//    public void goToDistanceTracker(View view) {
-//        startActivity( new Intent(this.getApplicationContext(), DistanceTrackingActivity.class)
-//        );
-//    }
 }

@@ -21,7 +21,6 @@ public class RoundRecyclerAdapter extends RecyclerView.Adapter<RoundRecyclerAdap
     public Program program;
     public RecyclerItemRoundBinding binding;
 
-
     public RoundRecyclerAdapter(Program _program){
         program = _program;
     }
@@ -33,7 +32,6 @@ public class RoundRecyclerAdapter extends RecyclerView.Adapter<RoundRecyclerAdap
         binding = DataBindingUtil.inflate(inflater, R.layout.recycler_item_round, viewGroup, false);
         View view = binding.getRoot();
         return new ViewHolder(view);
-
     }
 
 

@@ -32,7 +32,6 @@ public class RunActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-
         Bundle extras = getIntent().getExtras();
 
         progId = extras.getInt("programId");
@@ -42,7 +41,6 @@ public class RunActivity extends AppCompatActivity {
         labelMain = binding.textRunOrRest;
         locationMain = binding.textAddress;
         program = new Program(progId);
-//        startRound(program.course[0]);
 
         binding.textView3.setText(program.name);
         binding.textView.setText(program.level);
@@ -89,11 +87,6 @@ public class RunActivity extends AppCompatActivity {
         });
     }
 
-//    public void goToDistanceTracker(View view) {
-//        startActivity( new Intent(this.getApplicationContext(), DistanceTrackingActivity.class)
-//                );
-//    }
-
     public static class TimerHelperCallback{
         public TimerHelperCallback(){
 
@@ -113,23 +106,9 @@ public class RunActivity extends AppCompatActivity {
 
     }
 
-//    public void startRound(Program.Round r){
-//        TimerHelperCallback timerCb = new TimerHelperCallback();
-//        lh = new LocationHelper( RunActivity.this, locationMain, textDistMain, 0.0);
-//        for (int currRound = 0; currRound < program.course.length; currRound++) {
-//            if(!forceEnd){
-//                new Countdown(r.runSec, "Run", currRound, timerCb, r.runMeter).execute();
-//                new Countdown(r.restSec, "Rest", currRound, timerCb, 0).execute();
-//            }
-//
-//        }
-//    }
-
-
     public void timerStart(){
         AsyncTask fiveSec = new Countdown(10).execute();
     }
-
 
     public class Countdown extends AsyncTask<String, Integer, String> implements com.example.runtrackerwizardv11.Countdown {
 
@@ -162,21 +141,12 @@ public class RunActivity extends AppCompatActivity {
             if(callback != null){
                 TimerHelperCallback.testCb();
 
-//                if (currRound < program.course.length - 1) {
-//                    currRound++;
-//                    Program.Round nextRound = program.course[currRound];
-//                    new Countdown(nextRound.runMeter / 10, "Run", currRound, callback).execute();
-//                } else {
-//                    // All rounds are completed, do something if needed.
-//
-//                }
             }
 //            myTextView.setText(result);
         }
 
         @Override
         public void onProgressUpdate(int i) {
-//            super.onProgressUpdate(values);
             textTimerMain.setText("" + i);
         }
 
@@ -187,7 +157,6 @@ public class RunActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-//            currCountDown = this;
             binding.textRoundNo.setText( "Round " + (currRound+1) +" of " + (program.course.length + 1));
             boolean kmMet = false;
 
@@ -207,9 +176,6 @@ public class RunActivity extends AppCompatActivity {
                     i=seconds;
                     forceNext = false;
                 }
-//                if(label=="Rest"){
-//                    textDistMain.setText("");
-//                }
                 if(!isPaused){
                     onProgressUpdate(seconds -i);
                     try{
